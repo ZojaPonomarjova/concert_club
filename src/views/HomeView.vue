@@ -20,7 +20,6 @@
     <section class="tickets-section">
       <h4 class="tickets-section-title section-title">Купили билеты</h4>
       <div class="tickets-section-cards-container">
-        <!-- <div :v-if="!data">loading</div> -->
         <ClockLoader v-if="isLoading" />
         <ProfileCard
           v-for="profile in data"
@@ -28,24 +27,10 @@
           :key="profile.id"
           :profileName="profile.name"
           :profileCity="profile.address.city"
-          :anotherClass="profile - card_active"
+          anotherClass=""
           :userId="profile.id"
+          v-on:handleClickOnCard="handleClickOnCard($event)"
         />
-        <!-- <ProfileCard
-          profileName="Иванов семен"
-          profileCity="Санкт-Петербург"
-          anotherClass=""
-        />
-        <ProfileCard
-          profileName="Иванов семен"
-          profileCity="Санкт-Петербург"
-          anotherClass=""
-        />
-        <ProfileCard
-          profileName="Иванов семен"
-          profileCity="Санкт-Петербург"
-          anotherClass=""
-        /> -->
       </div>
     </section>
     <section class="venue-section">
@@ -140,9 +125,12 @@ export default {
     // },
   },
   methods: {
-    // ...mapActions({
-    //   handleClickToggleSidebar: "minimizeSidebar",
-    // }),
+    ...mapActions({
+      handleClickOnCard: "getChosenProfile",
+    }),
+    showId(event) {
+      console.log(event.target.dataset.userId);
+    },
   },
 };
 </script>

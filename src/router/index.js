@@ -14,11 +14,17 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
-    path: "/post",
-    name: "post",
+    path: "/posts",
+    name: "posts",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/PostView.vue"),
+      import(/* webpackChunkName: "about" */ "../views/PostsView.vue"),
   },
+  // {
+  //   path: "/post",
+  //   name: "post",
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/PostsView.vue"),
+  // },
 ];
 
 const router = createRouter({

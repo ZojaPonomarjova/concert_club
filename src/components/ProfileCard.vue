@@ -5,14 +5,15 @@
       class="profile-card"
       v-bind:class="[anotherClass]"
       v-bind:data-user-id="[userId]"
-      v-on:click="$emit('handleClickOnCard')"
+      v-on:click="$emit('handleClickOnCard', $event)"
     >
       <p class="profile-card-name">{{ profileName }}</p>
       <p class="profile-card-city">{{ profileCity }}</p>
       <ButtonComponent
         anotherClass="profile-card-button"
         buttonText="Смотреть профиль"
-        v-on:click="$emit('handleClickOnCard')"
+        v-bind:data-user-id="[userId]"
+        v-on:click="$emit('handleClickOnCard', $event)"
       />
     </div>
   </router-link>

@@ -2,18 +2,18 @@
   <main class="main">
     <div class="user-section">
       <div class="user-section-data">
-        <h5 class="user-name">Иванов Семен</h5>
+        <h5 class="user-name">{{ chosenProfile.username }}</h5>
       </div>
       <div class="black-line"></div>
       <div class="user-data">
-        <div class="user-city">Иванов Семен</div>
-        <div class="user-email">ivanov@mail.com</div>
+        <div class="user-city">{{ chosenProfile.name }}</div>
+        <div class="user-email">{{ chosenProfile.email }}</div>
 
-        <div class="user-phone">+7 (821) 311-21-32</div>
-        <div class="user-website">hildegard.org</div>
+        <div class="user-phone">{{ chosenProfile.phone }}</div>
+        <div class="user-website">{{ chosenProfile.website }}</div>
         <div class="user-company">
-          <p>Romaguera-Crona</p>
-          <p class="user-bs">harness real-time e-markets</p>
+          <p>{{ chosenProfile.company.name }}</p>
+          <p class="user-bs">{{ chosenProfile.company.bs }}</p>
         </div>
 
         <!-- <div class="user-section-buttons-container">
@@ -32,7 +32,59 @@
         <div class="black-line"></div>
         <div class="posts-container">
           <h4 class="section-title user-section-posts-title">Посты</h4>
+          <div class="posts-preview">
+            <ClockLoader v-if="isLoading" />
+            <template v-if="posts.length && !allPostsAreShown && !isLoading">
+              <PostPreview
+                v-for="post in firstPosts"
+                :key="post.id"
+                :postTitle="post.title"
+                :postText="post.body.substr(0, 50) + '...'"
+                anotherClass=""
+                :postId="post.id"
+                v-on:handleClickOnPostCard="handleClickOnPostCard($event)"
+              />
+            </template>
+            <template
+              v-else-if="posts.length && allPostsAreShown && !isLoading"
+            >
+              <PostPreview
+                v-for="post in posts"
+                :key="post.id"
+                :postTitle="post.title"
+                :postText="post.body.substr(0, 50) + '...'"
+                anotherClass=""
+                :postId="post.id"
+                v-on:handleClickOnPostCard="handleClickOnPostCard($event)"
+            /></template>
+          </div>
+          <a
+            href="#"
+            class="user-section-link"
+            v-if="!isLoading && !allPostsAreShown"
+            v-on:click.prevent="handleClickOnlink"
+          >
+            Развернуть &rarr;</a
+          >
+          <a
+            href="#"
+            class="user-section-link user-section-link_up"
+            v-if="!isLoading && allPostsAreShown"
+            v-on:click.prevent="handleClickOnlink"
+          >
+            Свернуть &uarr;</a
+          >
         </div>
+        <div class="user-section-button-container">
+          <router-link to="/posts">
+            <ButtonComponent
+              anotherClass="user-section-button"
+              buttonText="Смотреть публикации"
+              v-on:click="$emit('handleClickOnCard', $event)"
+            />
+          </router-link>
+        </div>
+        <div class="black-line user-section-black-line"></div>
       </div>
     </div>
   </main>
@@ -40,49 +92,63 @@
 
 <script>
 import ButtonComponent from "@/components/UI/ButtonComponent.vue";
-import ProfileCard from "../components/ProfileCard.vue";
+import PostPreview from "@/components/PostPreview.vue";
 import ClockLoader from "@/components/ClockLoader.vue";
 import { mapActions } from "vuex";
 
 export default {
   name: "AboutView",
   components: {
-    // ButtonComponent,
-    // ProfileCard,
-    // ClockLoader,
+    ButtonComponent,
+    PostPreview,
+    ClockLoader,
   },
-  // mounted() {
-  //   this.$store.dispatch("getData");
-  //   console.log(this.$store.getters.data);
-  // },
 
-  // computed: {
-  //   // //ошибка при загрузке
-  //   // errorText() {
-  //   //   return this.$store.getters.errorTextForPerson;
-  //   // },
-  //   // //данные пользователя
-  //   data() {
-  //     return this.$store.getters.data;
-  //   },
-  //   //вычисленный возраст
-  //   isLoading() {
-  //     return this.$store.getters.isLoading;
-  //   },
-  //   // //src для фото профиля
-  //   // profileUrl() {
-  //   //   return this.$store.getters.avatar;
-  //   // },
-  //   // //состояние для разворачивания сайдбара на маленьких экранах
-  //   // minimizeSidebar() {
-  //   //   return this.$store.getters.minimizeSidebar;
-  //   // },
-  // },
-  // methods: {
-  //   // ...mapActions({
-  //   //   handleClickToggleSidebar: "minimizeSidebar",
-  //   // }),
-  // },
+  mounted() {
+    // if (
+    //   this.$store.getters.posts.length === 0 &&
+    //   this.$store.getters.firstPosts.length === 0
+    // ) {
+    this.$store.dispatch("getChosenProfilePosts");
+    // }
+    // console.log(this.$store.getters.data);
+  },
+
+  computed: {
+    //   // //ошибка при загрузке
+    //   // errorText() {
+    //   //   return this.$store.getters.errorTextForPerson;
+    //   // },
+
+    posts() {
+      return this.$store.getters.posts;
+    },
+
+    //первые три поста
+    firstPosts() {
+      return this.$store.getters.firstPosts;
+    },
+
+    //состояние для сохранения выбранного пользователя
+    chosenProfile() {
+      return this.$store.getters.chosenProfile;
+    },
+    //состояние для лоадера
+    isLoading() {
+      return this.$store.getters.isLoading;
+    },
+
+    //состояние для показа всех постов пользователя
+    allPostsAreShown() {
+      return this.$store.getters.allPostsAreShown;
+    },
+  },
+  methods: {
+    ...mapActions({
+      handleClickOnlink: "showAllPosts",
+      handleClickOnPostCard: "getChosenPost",
+    }),
+  },
 };
 </script>
 <style scoped lang="scss">
@@ -93,7 +159,7 @@ export default {
 
   border: 1px solid black;
 
-  min-height: calc(100vw - 70px);
+  min-height: calc(100vh - 70px);
 }
 
 .black-line {
@@ -163,7 +229,7 @@ export default {
   font-family: "OpenSans-SemiBold", sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 15px;
 
   color: #ffffff;
@@ -172,17 +238,22 @@ export default {
   padding-left: 28px;
   padding-right: 28px;
 
-  justify-self: flex-end;
-  :last-child {
-    border-left: 1px solid $background;
-  }
+  margin: 0 auto;
+  align-self: center;
 }
 
-.user-section-buttons-container {
+.user-section-button-container {
+  margin: 70px 0 30px;
+
   display: flex;
-  flex-wrap: wrap;
-  padding: 0px 0px 0px;
+  justify-content: center;
 }
+
+// .user-section-buttons-container {
+//   display: flex;
+//   flex-wrap: wrap;
+//   padding: 0px 0px 0px;
+// }
 
 .user-section-posts {
   margin-top: 25px;
@@ -192,8 +263,21 @@ export default {
   width: 1116px;
   margin: 0 auto;
 
-  // border-left: 1px solid black;
-  // border-right: 1px solid black;
+  position: relative;
+}
+
+.posts-preview {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  a {
+    margin-bottom: 20px;
+
+    max-width: 350px;
+    width: 30%;
+  }
 }
 
 .section-title {
@@ -207,4 +291,36 @@ export default {
   padding-top: 16px;
   padding-bottom: 16px;
 }
+
+.loader-container_small {
+  min-height: 143px;
+}
+
+.user-section-link {
+  position: absolute;
+  right: 0px;
+  margin: 20px 0 30px;
+
+  font-family: "OpenSans-Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 17px;
+
+  color: #000;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.51);
+  }
+}
+
+.user-section-link_up {
+  margin: -30px 0 30px;
+}
+
+// .user-section-black-line {
+//   //   position: absolute;
+//   //   left: 0;
+//   margin-top: 60px;
+// }
 </style>

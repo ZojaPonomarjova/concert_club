@@ -1,35 +1,29 @@
 /*компонент для кнопки */
 <template>
-  <router-link to="/post">
+  <router-link to="/posts">
     <div
       class="post-preview-card"
       v-bind:class="[anotherClass]"
       v-bind:data-post-id="[postId]"
-      v-on:click="$emit('handleClickOnPostCard')"
+      v-on:click="$emit('handleClickOnPostCard', $event)"
     >
-      <p class="profile-card-name">{{ profileName }}</p>
-      <p class="profile-card-city">{{ profileCity }}</p>
-      <ButtonComponent
-        anotherClass="profile-card-button"
-        buttonText="Смотреть профиль"
-        v-on:click="$emit('handleClickOnCard')"
-      />
+      <p class="post-preview-title">{{ postTitle }}</p>
+      <p class="post-preview-text">{{ postText }}</p>
     </div>
   </router-link>
 </template>
 
 <script>
-import ButtonComponent from "./UI/ButtonComponent.vue";
 export default {
   name: "PostPreview",
   props: {
-    profileName: String,
-    profileCity: String,
+    postTitle: String,
+    postText: String,
     anotherClass: String,
     postId: Number,
   },
   components: {
-    ButtonComponent,
+    // ButtonComponent,
   },
   emits: ["handleClickOnPostCard"],
 };
@@ -38,42 +32,26 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/vars.scss";
 
-.profile-card {
-  border: 2px solid #dadada;
-  padding: 14px 14px;
-  width: 240px;
+.post-preview-card {
+  border: 1px solid #000;
+  padding: 14px 23px 17px 35px;
+  // min-width: 240px;
+  // max-width: 350px;
+
   margin-bottom: 10px;
+
+  height: 100%;
 }
 
 .profile-card:not(:last-child) {
   margin-right: 12px;
 }
 
-.profile-card_active {
-  border: 1px solid #000;
-}
-
-.profile-card-button {
-  font-family: "OpenSans-SemiBold";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 11px;
-  line-height: 15px;
-
-  text-transform: capitalize;
-
-  color: #ffffff;
-  background-color: $almostBlack;
-
-  padding: 10px 20px;
-  min-width: 148px;
-}
-
-.profile-card-name,
-.profile-card-city {
+.post-preview-title,
+.post-preview-text {
   margin: 0;
 }
-.profile-card-name {
+.post-preview-title {
   font-family: "OpenSans-Bold";
   font-style: normal;
   font-weight: 700;
@@ -86,7 +64,7 @@ export default {
   margin-bottom: 5px;
 }
 
-.profile-card-city {
+.post-preview-text {
   font-family: "OpenSans-Regular";
   font-style: normal;
   font-weight: 400;
@@ -95,6 +73,6 @@ export default {
 
   color: rgba(0, 0, 0, 0.41);
 
-  margin-bottom: 35px;
+  //   margin-bottom: 35px;
 }
 </style>

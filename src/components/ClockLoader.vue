@@ -1,6 +1,6 @@
 /*компонент для отображения футера */
 <template>
-  <div class="loader-container">
+  <div class="loader-container loader-container_small">
     <div class="clock-loader"></div>
   </div>
 </template>
