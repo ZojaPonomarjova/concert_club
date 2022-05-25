@@ -1,6 +1,6 @@
 /*компонент для кнопки */
 <template>
-  <router-link to="/posts">
+  <router-link to="/chosen-post">
     <div
       class="post-preview-card"
       v-bind:class="[anotherClass]"

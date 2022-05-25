@@ -10,21 +10,18 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    component: () => import("../views/AboutView.vue"),
   },
   {
     path: "/posts",
     name: "posts",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/PostsView.vue"),
+    component: () => import("../views/PostsView.vue"),
   },
-  // {
-  //   path: "/post",
-  //   name: "post",
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/PostsView.vue"),
-  // },
+  {
+    path: "/chosen-post",
+    name: "chosen-post",
+    component: () => import("../views/ChosenPostView.vue"),
+  },
 ];
 
 const router = createRouter({

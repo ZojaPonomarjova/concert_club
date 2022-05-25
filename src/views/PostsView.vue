@@ -20,7 +20,7 @@
 
 <script>
 import PostPreview from "@/components/PostPreview.vue";
-import ProfileCard from "../components/ProfileCard.vue";
+
 import ClockLoader from "@/components/ClockLoader.vue";
 import { mapActions } from "vuex";
 

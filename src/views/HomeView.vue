@@ -128,9 +128,7 @@ export default {
     ...mapActions({
       handleClickOnCard: "getChosenProfile",
     }),
-    showId(event) {
-      console.log(event.target.dataset.userId);
-    },
+
   },
 };
 </script>
