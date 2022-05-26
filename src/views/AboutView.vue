@@ -15,17 +15,6 @@
           <p>{{ chosenProfile.company.name }}</p>
           <p class="user-bs">{{ chosenProfile.company.bs }}</p>
         </div>
-
-        <!-- <div class="user-section-buttons-container">
-          <ButtonComponent
-            anotherClass="user-section-button"
-            buttonText="Написать сообщение"
-          />
-          <ButtonComponent
-            anotherClass="user-section-button"
-            buttonText="Предложить сходить на концерт"
-          />
-        </div> -->
       </div>
       <div class="black-line"></div>
       <div class="user-section-posts">
@@ -34,6 +23,7 @@
           <h4 class="section-title user-section-posts-title">Посты</h4>
           <div class="posts-preview">
             <ClockLoader v-if="isLoading" />
+
             <template v-if="posts.length && !allPostsAreShown && !isLoading">
               <PostPreview
                 v-for="post in firstPosts"
@@ -57,11 +47,14 @@
                 :postId="post.id"
                 v-on:handleClickOnPostCard="handleClickOnPostCard($event)"
             /></template>
+            <div class="user-section-error" v-if="errorTextForPosts">
+              {{ errorTextForPosts }}
+            </div>
           </div>
           <a
             href="#"
             class="user-section-link"
-            v-if="!isLoading && !allPostsAreShown"
+            v-if="posts.length && !isLoading && !allPostsAreShown"
             v-on:click.prevent="handleClickOnlink"
           >
             Развернуть &rarr;</a
@@ -69,7 +62,7 @@
           <a
             href="#"
             class="user-section-link user-section-link_up"
-            v-if="!isLoading && allPostsAreShown"
+            v-if="posts.length && !isLoading && allPostsAreShown"
             v-on:click.prevent="handleClickOnlink"
           >
             Свернуть &uarr;</a
@@ -111,14 +104,13 @@ export default {
     // ) {
     this.$store.dispatch("getChosenProfilePosts");
     // }
-    // console.log(this.$store.getters.data);
   },
 
   computed: {
-    //   // //ошибка при загрузке
-    //   // errorText() {
-    //   //   return this.$store.getters.errorTextForPerson;
-    //   // },
+    //ошибка при загрузке
+    errorTextForPosts() {
+      return this.$store.getters.errorTextForPosts;
+    },
 
     posts() {
       return this.$store.getters.posts;
@@ -159,7 +151,7 @@ export default {
 
   border: 1px solid black;
 
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 100px);
 }
 
 .black-line {
@@ -169,7 +161,7 @@ export default {
 }
 
 .user-section-data {
-  width: 1116px;
+  max-width: 1116px;
   margin: 0 auto;
 
   border-left: 1px solid black;
@@ -188,7 +180,7 @@ export default {
 }
 
 .user-data {
-  width: 1116px;
+  max-width: 1116px;
   margin: 0 auto;
 
   display: flex;
@@ -249,18 +241,12 @@ export default {
   justify-content: center;
 }
 
-// .user-section-buttons-container {
-//   display: flex;
-//   flex-wrap: wrap;
-//   padding: 0px 0px 0px;
-// }
-
 .user-section-posts {
   margin-top: 25px;
 }
 
 .posts-container {
-  width: 1116px;
+  max-width: 1116px;
   margin: 0 auto;
 
   position: relative;
@@ -272,11 +258,46 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 
+  @media screen and (max-width: 1116px) {
+    padding: 0px 20px;
+  }
+
+  @media screen and (max-width: 920px) {
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 920px) {
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 630px) {
+    max-width: 500px;
+  }
   a {
     margin-bottom: 20px;
-
+    min-width: 280px;
     max-width: 350px;
     width: 30%;
+  }
+
+  // a:not(a:last-of-type) {
+  //   margin-right: 12px;
+
+  //   @media screen and (max-width: 602px) {
+  //     margin-right: 0px;
+  //   }
+  // }
+
+  a {
+    margin-right: 12px;
+
+    @media screen and (max-width: 602px) {
+      margin-right: 0px;
+    }
   }
 }
 
@@ -290,6 +311,14 @@ export default {
   margin: 0;
   padding-top: 16px;
   padding-bottom: 16px;
+
+  @media screen and (max-width: 1116px) {
+    padding: 16px 20px;
+  }
+
+  @media screen and (max-width: 920px) {
+    text-align: center;
+  }
 }
 
 .loader-container_small {
@@ -298,7 +327,7 @@ export default {
 
 .user-section-link {
   position: absolute;
-  right: 0px;
+  right: 20px;
   margin: 20px 0 30px;
 
   font-family: "OpenSans-Regular";
@@ -312,15 +341,39 @@ export default {
   &:hover {
     color: rgba(0, 0, 0, 0.51);
   }
+
+  @media screen and (max-width: 1116px) {
+    right: 7%;
+  }
+  @media screen and (max-width: 920px) {
+    right: 18%;
+  }
+
+  @media screen and (max-width: 630px) {
+    right: unset;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .user-section-link_up {
   margin: -30px 0 30px;
+
+  @media screen and (max-width: 920px) {
+    margin: 0px 0px 30px;
+  }
 }
 
-// .user-section-black-line {
-//   //   position: absolute;
-//   //   left: 0;
-//   margin-top: 60px;
-// }
+.user-section-error {
+  color: brown;
+  font-family: "AlegreyaSansSC-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 40px;
+
+  margin: 0px 0px;
+
+  min-height: 159px;
+}
 </style>

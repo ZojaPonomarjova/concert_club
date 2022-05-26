@@ -26,6 +26,9 @@
           :commentEmail="comment.email"
         />
         <ClockLoader v-if="isLoading && !commentIsAdding" />
+        <div class="chosen-post-section-error">
+          {{ errorTextForCommentsLoading }}
+        </div>
       </div>
       <ButtonComponent
         buttonText="Добавить комментарий"
@@ -95,6 +98,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getChosenPostComments");
+    this.$store.dispatch("closeAddCommentMode");
   },
   //emailError
   computed: {
@@ -122,6 +126,10 @@ export default {
     successText() {
       return this.$store.getters.successText;
     },
+    //ошибка при получении комментариев
+    errorTextForCommentsLoading() {
+      return this.$store.getters.errorTextForCommentsLoading;
+    },
   },
   data() {
     return {
@@ -134,6 +142,7 @@ export default {
       handleClickOnPostCard: "getChosenPost",
       handleClickAddComment: "addComment",
       handleClickSendComment: "sendComment",
+      closeAddCommentMode: "closeAddCommentMode",
     }),
 
     checkEmail(event) {
@@ -327,6 +336,18 @@ export default {
   line-height: 40px;
 
   margin: 0px 0px;
-  //   margin-top: 250px;
+}
+
+.chosen-post-section-error {
+  color: brown;
+  font-family: "AlegreyaSansSC-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 40px;
+
+  margin: 0px 0px;
+
+  //   min-height: 159px;
 }
 </style>

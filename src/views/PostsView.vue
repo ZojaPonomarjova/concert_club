@@ -65,7 +65,7 @@ export default {
 @import "../assets/styles/vars.scss";
 
 .posts-section {
-  width: 1116px;
+  max-width: 1116px;
   margin: 0 auto;
 
   min-height: calc(100vh - 70px);
@@ -82,6 +82,14 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media screen and (max-width: 1116px) {
+    padding: 0 20px 40px;
+  }
+
+  @media screen and (max-width: 920px) {
+    justify-content: center;
+  }
 }
 
 .section-title {
@@ -92,11 +100,18 @@ export default {
   line-height: 40px;
 
   margin: 30px 0px;
+
+  @media screen and (max-width: 1116px) {
+    text-align: center;
+  }
 }
 
-.posts-section a {
+.posts-section-container a {
   width: 30%;
   max-width: 350px;
+  min-width: 280px;
   margin-bottom: 15px;
+
+  margin-right: 12px;
 }
 </style>

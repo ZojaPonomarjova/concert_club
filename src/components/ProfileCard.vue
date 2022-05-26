@@ -44,9 +44,15 @@ export default {
   padding: 14px 14px;
   width: 240px;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 616px) {
+    width: 100%;
+
+    max-width: 350px;
+  }
 }
 
-.profile-card:not(:last-child) {
+.profile-card:not(.profile-card:last-child) {
   margin-right: 12px;
 }
 

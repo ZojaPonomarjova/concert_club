@@ -21,16 +21,47 @@
       <h4 class="tickets-section-title section-title">Купили билеты</h4>
       <div class="tickets-section-cards-container">
         <ClockLoader v-if="isLoading" />
-        <ProfileCard
-          v-for="profile in data"
-          :v-if="data.length"
-          :key="profile.id"
-          :profileName="profile.name"
-          :profileCity="profile.address.city"
-          anotherClass=""
-          :userId="profile.id"
-          v-on:handleClickOnCard="handleClickOnCard($event)"
-        />
+        <template v-if="data.length && allUsersAreShown && !isLoading">
+          <ProfileCard
+            v-for="profile in data"
+            :key="profile.id"
+            :profileName="profile.name"
+            :profileCity="profile.address.city"
+            anotherClass=""
+            :userId="profile.id"
+            v-on:handleClickOnCard="handleClickOnCard($event)"
+          />
+        </template>
+        <template v-if="data.length && !isLoading && !allUsersAreShown">
+          <ProfileCard
+            v-for="profile in firstUsers"
+            :key="profile.id"
+            :profileName="profile.name"
+            :profileCity="profile.address.city"
+            anotherClass=""
+            :userId="profile.id"
+            v-on:handleClickOnCard="handleClickOnCard($event)"
+          />
+        </template>
+        <div class="tickets-section-error" v-if="errorTextForUsers">
+          {{ errorTextForUsers }}
+        </div>
+        <a
+          href="#"
+          class="tickets-section-link"
+          v-if="data.length && !isLoading && !allUsersAreShown"
+          v-on:click.prevent="handleClickOnlink"
+        >
+          Развернуть &rarr;</a
+        >
+        <a
+          href="#"
+          class="tickets-section-link tickets-section-link_up"
+          v-if="data.length && !isLoading && allUsersAreShown"
+          v-on:click.prevent="handleClickOnlink"
+        >
+          Свернуть &uarr;</a
+        >
       </div>
     </section>
     <section class="venue-section">
@@ -99,36 +130,35 @@ export default {
     if (this.$store.getters.data.length === 0) {
       this.$store.dispatch("getData");
     }
-    console.log(this.$store.getters.data);
   },
 
   computed: {
     // //ошибка при загрузке
-    // errorText() {
-    //   return this.$store.getters.errorTextForPerson;
-    // },
-    // //данные пользователя
+    errorTextForUsers() {
+      return this.$store.getters.errorTextForUsers;
+    },
+    //данные пользователей
     data() {
       return this.$store.getters.data;
     },
-    //вычисленный возраст
+    //состояние для загрузки
     isLoading() {
       return this.$store.getters.isLoading;
     },
-    // //src для фото профиля
-    // profileUrl() {
-    //   return this.$store.getters.avatar;
-    // },
-    // //состояние для разворачивания сайдбара на маленьких экранах
-    // minimizeSidebar() {
-    //   return this.$store.getters.minimizeSidebar;
-    // },
+    //первые 4 пользователя
+    firstUsers() {
+      return this.$store.getters.firstUsers;
+    },
+    //состояние для сворачивания / разворачивания карточек юзеров
+    allUsersAreShown() {
+      return this.$store.getters.allUsersAreShown;
+    },
   },
   methods: {
     ...mapActions({
       handleClickOnCard: "getChosenProfile",
+      handleClickOnlink: "showAllUsers",
     }),
-
   },
 };
 </script>
@@ -162,6 +192,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 420px) {
+    padding: 0 30px;
+  }
 }
 
 .main-title-container {
@@ -173,6 +207,10 @@ export default {
   );
   margin-top: 190px;
   margin-bottom: 34px;
+
+  @media screen and (max-width: 768px) {
+    padding: 0 30px 66px;
+  }
 }
 
 .main-title {
@@ -214,6 +252,11 @@ export default {
 
 .main-button {
   margin-bottom: 45px;
+
+  @media screen and (max-width: 768px) {
+    min-width: fit-content;
+    padding: 11.5px 25px;
+  }
 }
 
 .next-prev-button {
@@ -256,6 +299,11 @@ export default {
 .tickets-section-title {
   padding-top: 40px;
   margin-bottom: 16px;
+
+  @media screen and (max-width: 1116px) {
+    text-align: center;
+    width: 100%;
+  }
 }
 
 .tickets-section {
@@ -264,6 +312,23 @@ export default {
   padding: 0 60px 47px;
 
   background-color: $background;
+
+  @media screen and (max-width: 713px) {
+    margin-top: 450px;
+  }
+
+  @media screen and (max-width: 573px) {
+    margin-top: 500px;
+    padding: 0 30px 47px;
+  }
+
+  @media screen and (max-width: 342px) {
+    margin-top: 550px;
+  }
+
+  @media screen and (max-width: 309px) {
+    margin-top: 580px;
+  }
 }
 
 .tickets-section-cards-container {
@@ -272,6 +337,31 @@ export default {
   flex-wrap: wrap;
 
   justify-content: space-between;
+
+  position: relative;
+
+  a:nth-last-child(2) {
+    margin-bottom: 60px;
+  }
+
+  @media screen and (max-width: 1116px) {
+    // justify-content: center;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 616px) {
+    justify-content: center;
+
+    a {
+      width: 100%;
+    }
+  }
+
+  a:not(a:last-child) {
+    margin-right: 8px;
+    max-width: 350px;
+  }
 }
 
 .venue-section {
@@ -282,16 +372,27 @@ export default {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
+
+  @media screen and (max-width: 992px) {
+    padding: 0 30px 48px;
+  }
 }
 
 .venue-section-description {
   width: calc(50% - 68px);
   padding-right: 68px;
   position: relative;
+
+  @media screen and (max-width: 992px) {
+    // min-width: 100%;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-right: 0px;
+  }
 }
 
 .venue-section-application {
-  width: 50%;
+  width: 52%;
   min-width: 559px;
   padding: 13px 26px;
 
@@ -299,6 +400,15 @@ export default {
 
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 1116px) {
+    min-width: 52%;
+  }
+
+  @media screen and (max-width: 992px) {
+    min-width: 100%;
+    width: 100%;
+  }
 }
 
 .venue-description {
@@ -317,6 +427,7 @@ export default {
   line-height: 20px;
 
   margin-left: 42px;
+  margin-bottom: 20px;
 }
 
 .venue-description-text_medium {
@@ -353,6 +464,10 @@ export default {
   margin-bottom: 20px;
   border: 1px solid $almostBlack;
   background-color: $background;
+
+  @media screen and (max-width: 992px) {
+    height: 180px;
+  }
 }
 .venue-section-application-textarea::placeholder {
   font-family: "OpenSans-SemiBold", sans-serif;
@@ -393,6 +508,14 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 506px) {
+    padding: 0 30px 40px;
+  }
 }
 
 .about-group-section-text {
@@ -408,9 +531,65 @@ export default {
 
   margin-top: 15px;
   width: calc(100% - 168px);
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .clock-loader {
   align-self: center;
+}
+
+.tickets-section-error {
+  color: brown;
+  font-family: "AlegreyaSansSC-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 40px;
+
+  margin: 0px 0px;
+
+  min-height: 159px;
+
+  @media screen and (max-width: 1116px) {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.tickets-section-link {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin: 20px 0 30px;
+
+  font-family: "OpenSans-Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 17px;
+
+  color: #000;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.51);
+  }
+
+  @media screen and (max-width: 1116px) {
+    text-align: end;
+  }
+
+  @media screen and (max-width: 617px) {
+    right: 12.5%;
+  }
+  @media screen and (max-width: 515px) {
+    right: 10%;
+  }
+}
+
+.tickets-section-link_up {
+  margin: -30px 0 30px;
 }
 </style>

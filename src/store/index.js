@@ -6,20 +6,35 @@ export default createStore({
   state: {
     //состояние для загрузки
     isLoading: false,
-    //ошибка при загрузке
-    errorText: "",
+    //ошибка при загрузке юзеров
+    errorTextForUsers: "",
     //состояние для отображения выбранного профиля
     chosenProfile: null,
-    //состояние для полученных данных
+    //состояние для полученных данных пользователей
     data: [],
+    //посты выбранного пользователя
     posts: [],
+    //комментарии к выбранному посту
     comments: [],
+    //состояние для сворачивания/разворачивания постов
     allPostsAreShown: false,
+    //состояние для сворачивания/разворачивания карточек юзеров
+    allUsersAreShown: false,
+    //выбранный пост
     chosenPost: null,
+    //состояние для перехода в режим добавления комментария
     commentIsAdding: false,
+    //сообщение при успешной отправке комментария
     successText: "",
+    //ошибка при отправке комментария
     errorTextForComment: "",
+    //ошибка при загрузке постов
+    errorTextForPosts: "",
+    //ошибка при загрузке комментариев
+    errorTextForCommentsLoading: "",
   },
+  // },
+
   getters: {
     isLoading(state) {
       return state.isLoading;
@@ -46,6 +61,12 @@ export default createStore({
       const firstPosts = [...state.posts].splice(0, 3);
       return firstPosts;
     },
+    firstUsers(state) {
+      return state.firstUsers;
+    },
+    allUsersAreShown(state) {
+      return state.allUsersAreShown;
+    },
     commentIsAdding(state) {
       return state.commentIsAdding;
     },
@@ -54,6 +75,15 @@ export default createStore({
     },
     errorTextForComment(state) {
       return state.errorTextForComment;
+    },
+    errorTextForUsers(state) {
+      return state.errorTextForUsers;
+    },
+    errorTextForPosts(state) {
+      return state.errorTextForPosts;
+    },
+    errorTextForCommentsLoading(state) {
+      return state.errorTextForCommentsLoading;
     },
   },
   mutations: {
@@ -81,6 +111,12 @@ export default createStore({
     SET_ALL_POSTS_ARE_SHOWN: (state) => {
       state.allPostsAreShown = !state.allPostsAreShown;
     },
+    SET_ALL_USERS_ARE_SHOWN: (state) => {
+      state.allUsersAreShown = !state.allUsersAreShown;
+    },
+    SET_FIRST_USERS: (state, payload) => {
+      state.firstUsers = payload;
+    },
     COMMENT_IS_ADDING: (state, payload) => {
       state.commentIsAdding = payload;
     },
@@ -90,12 +126,25 @@ export default createStore({
     SET_ERROR_TEXT_FOR_COMMENT: (state, payload) => {
       state.errorTextForComment = payload;
     },
+    SET_ERROR_TEXT_FOR_USERS: (state, payload) => {
+      state.errorTextForUsers = payload;
+    },
+    SET_ERROR_TEXT_FOR_POSTS: (state, payload) => {
+      state.errorTextForPosts = payload;
+    },
+    SET_ERROR_TEXT_FOR_COMMENTS_LOADING: (state, payload) => {
+      state.errorTextForCommentsLoading = payload;
+    },
   },
   actions: {
     addComment: (context) => {
       context.commit("COMMENT_IS_ADDING", true);
-      console.log("eeeee");
     },
+
+    closeAddCommentMode: (context) => {
+      context.commit("COMMENT_IS_ADDING", false);
+    },
+
     sendComment: (context) => {
       context.commit("SET_ERROR_TEXT_FOR_COMMENT", "");
       const emailInput = document.getElementById("addCommentEmail");
@@ -126,8 +175,8 @@ export default createStore({
         )
           .then((response) => response.json())
           .then((response) => {
-            console.log(context.state.comments);
-            console.log(response);
+            // console.log(context.state.comments);
+            // console.log(response);
             if (response.name === nameInput.value) {
               const newComment = {
                 id: +context.state.comments[context.state.comments.length - 1]
@@ -162,27 +211,33 @@ export default createStore({
       context.commit("SET_ALL_POSTS_ARE_SHOWN");
     },
 
+    showAllUsers: (context) => {
+      context.commit("SET_ALL_USERS_ARE_SHOWN");
+    },
+
     getChosenProfile: (context, event) => {
       const clickedCard = event.target.closest(".profile-card");
 
       const chosenPerson = context.state.data.find(
         (elem) => elem.id === +clickedCard.dataset.userId
       );
-      // console.log(chosenPerson);
+
       context.commit("SET_CHOOSEN_PROFILE", chosenPerson);
     },
+
     getChosenPost: (context, event) => {
       const clickedPost = event.target.closest(".post-preview-card");
-      // console.log(clickedPost.dataset.postId);
+
       const chosenPost = context.state.posts.find(
         (elem) => elem.id === +clickedPost.dataset.postId
       );
-      // console.log(chosenPost);
+
       context.commit("SET_CHOOSEN_POST", chosenPost);
     },
+
     getData: (context) => {
       context.commit("SET_IS_LOADING", true);
-      //   context.commit("SET_CHOOSEBUTTON_IS_CLICKED", true);
+      context.commit("SET_ERROR_TEXT_FOR_USERS", "");
       //setTimeout, чтобы показать лоадер
       setTimeout(() => {
         fetch("https://jsonplaceholder.typicode.com/users")
@@ -190,8 +245,11 @@ export default createStore({
           .then((data) => {
             try {
               if (data) {
-                context.commit("SET_DATA", data);
                 // console.log(data);
+                const firstUsers = [...data].splice(0, 4);
+
+                context.commit("SET_DATA", data);
+                context.commit("SET_FIRST_USERS", firstUsers);
               }
               if (!data) {
                 throw new Error(
@@ -200,13 +258,13 @@ export default createStore({
               }
             } catch (error) {
               console.log(error);
-              context.commit("SET_ERROR_TEXT", error);
+              context.commit("SET_ERROR_TEXT_FOR_USERS", error);
             }
           })
           .catch((error) => {
             console.log(error);
             context.commit(
-              "SET_ERROR_TEXT",
+              "SET_ERROR_TEXT_FOR_USERS",
               "Проверьте свое соединение с сетью"
             );
           })
@@ -215,8 +273,11 @@ export default createStore({
           });
       }, 2000);
     },
+
     getChosenPostComments: (context) => {
       context.commit("SET_IS_LOADING", true);
+      context.commit("SET_ERROR_TEXT_FOR_COMMENTS_LOADING", "");
+      context.commit("SET_COMMENTS", []);
 
       //setTimeout, чтобы показать лоадер
       setTimeout(() => {
@@ -228,7 +289,7 @@ export default createStore({
             try {
               if (comments) {
                 context.commit("SET_COMMENTS", comments);
-                console.log(comments);
+                // console.log(comments);
               }
               if (!comments) {
                 throw new Error(
@@ -237,13 +298,13 @@ export default createStore({
               }
             } catch (error) {
               console.log(error);
-              context.commit("SET_ERROR_TEXT", error);
+              context.commit("SET_ERROR_TEXT_FOR_COMMENTS_LOADING", error);
             }
           })
           .catch((error) => {
             console.log(error);
             context.commit(
-              "SET_ERROR_TEXT",
+              "SET_ERROR_TEXT_FOR_COMMENTS_LOADING",
               "Проверьте свое соединение с сетью"
             );
           })
@@ -255,7 +316,8 @@ export default createStore({
 
     getChosenProfilePosts: (context) => {
       context.commit("SET_IS_LOADING", true);
-
+      context.commit("SET_ERROR_TEXT_FOR_POSTS", "");
+      context.commit("SET_POSTS", []);
       //setTimeout, чтобы показать лоадер
       setTimeout(() => {
         fetch(
@@ -265,8 +327,8 @@ export default createStore({
           .then((data) => {
             try {
               if (data) {
-                context.commit("SET_POSTS", data);
                 // console.log(data);
+                context.commit("SET_POSTS", data);
               }
               if (!data) {
                 throw new Error(
@@ -275,13 +337,13 @@ export default createStore({
               }
             } catch (error) {
               console.log(error);
-              context.commit("SET_ERROR_TEXT", error);
+              context.commit("SET_ERROR_TEXT_FOR_POSTS", error);
             }
           })
           .catch((error) => {
             console.log(error);
             context.commit(
-              "SET_ERROR_TEXT",
+              "SET_ERROR_TEXT_FOR_POSTS",
               "Проверьте свое соединение с сетью"
             );
           })
@@ -292,4 +354,5 @@ export default createStore({
     },
   },
   modules: {},
+  // },
 });

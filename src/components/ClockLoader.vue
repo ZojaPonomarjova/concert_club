@@ -16,7 +16,7 @@ export default {
 .loader-container {
   background: transparent;
   width: 100%;
-  min-height: 486px;
+  min-height: 159px;
 
   display: flex;
   justify-content: center;
