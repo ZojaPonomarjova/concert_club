@@ -360,6 +360,7 @@ export default {
   @media screen and (max-width: 1116px) {
     max-width: 650px;
     margin: 0 auto;
+    width: fit-content;
   }
 
   @media screen and (max-width: 616px) {
@@ -396,7 +397,6 @@ export default {
   position: relative;
 
   @media screen and (max-width: 992px) {
-
     width: 100%;
     margin-bottom: 20px;
     padding-right: 0px;

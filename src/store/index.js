@@ -5,6 +5,7 @@ import { moduleForComments } from "./moduleForComments";
 
 const store = createStore({
   state: {
+    //состояние для загрузки одно на всех, для ускорения процесса. нужно добавить отдельное для каждой загрузки
     //состояние для загрузки
     isLoading: false,
   },
