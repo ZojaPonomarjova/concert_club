@@ -49,13 +49,23 @@ export default {
       return this.$store.getters.isLoading;
     },
     posts() {
-      return this.$store.getters.posts;
+      const posts = this.checkPosts();
+      return posts;
     },
   },
   methods: {
     ...mapActions({
       handleClickOnPostCard: "getChosenPost",
     }),
+
+    checkPosts() {
+      if (this.$store.getters.posts.length === 0) {
+        return JSON.parse(sessionStorage.getItem("chosenPersonPosts"));
+      } else {
+        return this.$store.getters.posts;
+      }
+      //chosenPersonPosts
+    },
   },
 };
 </script>

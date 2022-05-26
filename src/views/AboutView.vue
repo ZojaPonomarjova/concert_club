@@ -123,7 +123,8 @@ export default {
 
     //состояние для сохранения выбранного пользователя
     chosenProfile() {
-      return this.$store.getters.chosenProfile;
+      const chosenProfile = this.checkCosenPerson();
+      return chosenProfile;
     },
     //состояние для лоадера
     isLoading() {
@@ -140,6 +141,17 @@ export default {
       handleClickOnlink: "showAllPosts",
       handleClickOnPostCard: "getChosenPost",
     }),
+
+    checkCosenPerson() {
+      let chosenPerson;
+      if (this.$store.getters.chosenProfile === null) {
+        chosenPerson = JSON.parse(sessionStorage.getItem("chosenPerson"));
+      } else {
+        chosenPerson = this.$store.getters.chosenProfile;
+      }
+
+      return chosenPerson;
+    },
   },
 };
 </script>

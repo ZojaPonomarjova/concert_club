@@ -33,7 +33,7 @@ export default createStore({
     //ошибка при загрузке комментариев
     errorTextForCommentsLoading: "",
   },
-  // },
+
 
   getters: {
     isLoading(state) {
@@ -175,8 +175,6 @@ export default createStore({
         )
           .then((response) => response.json())
           .then((response) => {
-            // console.log(context.state.comments);
-            // console.log(response);
             if (response.name === nameInput.value) {
               const newComment = {
                 id: +context.state.comments[context.state.comments.length - 1]
@@ -223,16 +221,23 @@ export default createStore({
       );
 
       context.commit("SET_CHOOSEN_PROFILE", chosenPerson);
+      sessionStorage.setItem("chosenPerson", JSON.stringify(chosenPerson));
     },
 
     getChosenPost: (context, event) => {
       const clickedPost = event.target.closest(".post-preview-card");
 
-      const chosenPost = context.state.posts.find(
+      const posts =
+        context.state.posts.length !== 0
+          ? context.state.posts
+          : JSON.parse(sessionStorage.getItem("chosenPersonPosts"));
+
+      const chosenPost = posts.find(
         (elem) => elem.id === +clickedPost.dataset.postId
       );
 
       context.commit("SET_CHOOSEN_POST", chosenPost);
+      sessionStorage.setItem("chosenPost", JSON.stringify(chosenPost));
     },
 
     getData: (context) => {
@@ -245,7 +250,6 @@ export default createStore({
           .then((data) => {
             try {
               if (data) {
-                // console.log(data);
                 const firstUsers = [...data].splice(0, 4);
 
                 context.commit("SET_DATA", data);
@@ -279,17 +283,19 @@ export default createStore({
       context.commit("SET_ERROR_TEXT_FOR_COMMENTS_LOADING", "");
       context.commit("SET_COMMENTS", []);
 
+      const postId =
+        context.state.chosenPost !== null
+          ? context.state.chosenPost.id
+          : JSON.parse(sessionStorage.getItem("chosenPost")).id;
+
       //setTimeout, чтобы показать лоадер
       setTimeout(() => {
-        fetch(
-          `https://jsonplaceholder.typicode.com/comments?postId=${context.state.chosenPost.id}`
-        )
+        fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
           .then((response) => response.json())
           .then((comments) => {
             try {
               if (comments) {
                 context.commit("SET_COMMENTS", comments);
-                // console.log(comments);
               }
               if (!comments) {
                 throw new Error(
@@ -318,17 +324,23 @@ export default createStore({
       context.commit("SET_IS_LOADING", true);
       context.commit("SET_ERROR_TEXT_FOR_POSTS", "");
       context.commit("SET_POSTS", []);
+
+      const userId =
+        context.state.chosenProfile !== null
+          ? context.state.chosenProfile.id
+          : JSON.parse(sessionStorage.getItem("chosenPerson")).id;
       //setTimeout, чтобы показать лоадер
       setTimeout(() => {
-        fetch(
-          `https://jsonplaceholder.typicode.com/posts?userId=${context.state.chosenProfile.id}`
-        )
+        fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
           .then((response) => response.json())
           .then((data) => {
             try {
               if (data) {
-                // console.log(data);
                 context.commit("SET_POSTS", data);
+                sessionStorage.setItem(
+                  "chosenPersonPosts",
+                  JSON.stringify(data)
+                );
               }
               if (!data) {
                 throw new Error(

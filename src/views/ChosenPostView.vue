@@ -115,7 +115,8 @@ export default {
     },
     //состояние для сохранения выбранного поста
     chosenPost() {
-      return this.$store.getters.chosenPost;
+      const chosenPost = this.checkCosenPost();
+      return chosenPost;
     },
     //состояние для загрузки
     isLoading() {
@@ -162,6 +163,16 @@ export default {
       } else {
         this.emailError = "";
       }
+    },
+    checkCosenPost() {
+      let chosenPost;
+      if (this.$store.getters.chosenPost === null) {
+        chosenPost = JSON.parse(sessionStorage.getItem("chosenPost"));
+      } else {
+        chosenPost = this.$store.getters.chosenPost;
+      }
+
+      return chosenPost;
     },
   },
 };
