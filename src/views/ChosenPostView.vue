@@ -1,3 +1,4 @@
+/**детальная страница поста со списком всех комментариев */
 <template>
   <main class="main">
     <div class="chosen-post-section">
@@ -378,8 +379,6 @@ export default {
 
   margin: 0px 0px;
   margin-top: 250px;
-  //   padding: 50px 20px;
-
   text-align: center;
 }
 

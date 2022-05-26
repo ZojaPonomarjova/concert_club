@@ -48,9 +48,6 @@ export default {
   @media screen and (max-width: 768px) {
     padding: 0 40px;
   }
-
-  // position: fixed;
-  // top: 0px;
 }
 .header-logo {
   font-family: "AlegreyaSansSC-Bold", sans-serif;

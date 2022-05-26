@@ -1,4 +1,4 @@
-/*компонент для отображения футера */
+/*компонент для лоадера */
 <template>
   <div class="loader-container loader-container_small">
     <div class="clock-loader"></div>

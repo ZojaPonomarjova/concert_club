@@ -1,4 +1,4 @@
-/*компонент для кнопки */
+/*компонент для комментария */
 <template>
   <div class="chosen-post-comment-container" v-bind:class="[anotherClass]">
     <p class="chosen-post-comment-email">{{ commentEmail }}</p>
@@ -62,6 +62,5 @@ export default {
   line-height: 17px;
 
   margin-bottom: 20px;
-  //   text-align: end;
 }
 </style>

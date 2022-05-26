@@ -1,3 +1,4 @@
+/**домашняя страница отображает список пользователей */
 <template>
   <main class="main">
     <div class="main-picture-container">
@@ -395,7 +396,7 @@ export default {
   position: relative;
 
   @media screen and (max-width: 992px) {
-    // min-width: 100%;
+
     width: 100%;
     margin-bottom: 20px;
     padding-right: 0px;

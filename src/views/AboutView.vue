@@ -1,3 +1,4 @@
+/*Страница пользователя */
 <template>
   <main class="main">
     <div class="user-section">
@@ -98,12 +99,7 @@ export default {
   },
 
   mounted() {
-    // if (
-    //   this.$store.getters.posts.length === 0 &&
-    //   this.$store.getters.firstPosts.length === 0
-    // ) {
     this.$store.dispatch("getChosenProfilePosts");
-    // }
   },
 
   computed: {
@@ -210,7 +206,7 @@ export default {
 
   @media screen and (max-width: 1116px) {
     max-width: 800px;
-    // padding: 0 20px;
+
     border-right: 1px solid #000;
 
     div:nth-last-child(-n + 2) {
@@ -219,7 +215,7 @@ export default {
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 670px) {
     max-width: 500px;
 
     border-right: 1px solid #000;
@@ -249,7 +245,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 670px) {
       width: 100%;
     }
   }
@@ -348,14 +344,6 @@ export default {
     max-width: 350px;
     width: 30%;
   }
-
-  // a:not(a:last-of-type) {
-  //   margin-right: 12px;
-
-  //   @media screen and (max-width: 602px) {
-  //     margin-right: 0px;
-  //   }
-  // }
 
   a {
     margin-right: 12px;

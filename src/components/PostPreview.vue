@@ -1,4 +1,4 @@
-/*компонент для кнопки */
+/*компонент для карточки с превью поста*/
 <template>
   <router-link to="/chosen-post">
     <div
@@ -22,9 +22,7 @@ export default {
     anotherClass: String,
     postId: Number,
   },
-  components: {
-    // ButtonComponent,
-  },
+
   emits: ["handleClickOnPostCard"],
 };
 </script>
@@ -35,8 +33,6 @@ export default {
 .post-preview-card {
   border: 1px solid #000;
   padding: 14px 23px 17px 35px;
-  // min-width: 240px;
-  // max-width: 350px;
 
   margin-bottom: 10px;
 
@@ -72,7 +68,5 @@ export default {
   line-height: 17px;
 
   color: rgba(0, 0, 0, 0.41);
-
-  //   margin-bottom: 35px;
 }
 </style>

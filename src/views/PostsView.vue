@@ -1,3 +1,4 @@
+/**список постов пользователя */
 <template>
   <main class="main">
     <div class="posts-section">
@@ -30,24 +31,20 @@ import { mapActions } from "vuex";
 export default {
   name: "AboutView",
   components: {
-    // ButtonComponent,
     PostPreview,
-
     ClockLoader,
   },
-  // mounted() {
-  //   this.$store.dispatch("getData");
-  //   console.log(this.$store.getters.data);
-  // },
 
   computed: {
     //ошибка при загрузке
     errorTextForPosts() {
       return this.$store.getters.errorTextForPosts;
     },
+    //состояние для лоадера
     isLoading() {
       return this.$store.getters.isLoading;
     },
+    //посты
     posts() {
       const posts = this.checkPosts();
       return posts;
@@ -64,7 +61,6 @@ export default {
       } else {
         return this.$store.getters.posts;
       }
-      //chosenPersonPosts
     },
   },
 };

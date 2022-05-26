@@ -1,24 +1,47 @@
-# concert_club
+# Приложение "concert_club".
 
-## Project setup
+_Сервис для просмотра информации о купивших билеты на концерт._
+
+---
+
+Включает в себя:
+
+1.  <ins>Список пользователей</ins>. <br>
+    Домашняя страница содержит основную информацию о мероприятии. А также список пользователей, купивших билеты. Список отображен в виде карточек.<br>
+2.  <ins>Страница пользователя</ins>. <br>
+    2.1 В верхней части страницы отображается информация о пользователе.<br>
+    2.2 В нижней части страницы Список из 3-х превью постов пользователя.<br>
+
+3.  <ins>Список постов пользователя</ins>. <br>
+    здесь выведены все посты пользователя в виде карточек.<br>
+
+4.  <ins>Детальная страница поста</ins>. <br>
+    2.1 В верхней части страницы отображены название и текст постаю<br>
+    2.2 В нижней части страницы отображены все комментарии к данному посту c названием и email.<br>
+    2.3 Добавлена возможность оставлять свои комментарии к данному посту. При нажатии на кнопку "Добавить комментарий" открывается окно для написания комментария.
+
+    Также на всех страницах добавлен Loader (ожидание загрузки с сервера).<br>
+
+---
+
+<!-- ![gif](https://github.com/ZojaPonomarjova/random-beer-generator/blob/master/public/assets/images/randomBeerGenerator.gif) -->
+
+<!-- #### GitHub Pages: -->
+
+<!-- [ https://zojaponomarjova.github.io/random-beer-generator/ ](https://zojaponomarjova.github.io/random-beer-generator/) -->
+
+#### Используемые технологии:
+
+- Vue
+- Vuex
+- SASS
+- REST API
+
+#### Запуск приложения:
+
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Откройте [ http://localhost:8080/](http://localhost:8080), чтобы просмотреть его в браузере.
