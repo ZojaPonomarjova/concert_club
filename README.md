@@ -26,9 +26,9 @@ _Сервис для просмотра информации о пользова
 
 ![gif](https://github.com/ZojaPonomarjova/concert_club/blob/master/public/assets/images/concert_club.gif)
 
-<!-- #### GitHub Pages: -->
+#### GitHub Pages:
 
-<!-- [ https://zojaponomarjova.github.io/random-beer-generator/ ](https://zojaponomarjova.github.io/random-beer-generator/) -->
+[ https://zojaponomarjova.github.io/concert_club/ ](https://zojaponomarjova.github.io/concert_club/)
 
 #### Используемые технологии:
 
