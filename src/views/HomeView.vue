@@ -18,7 +18,14 @@
     </div>
 
     <section class="tickets-section">
-      <h4 class="tickets-section-title section-title">Купили билеты</h4>
+      <div class="tickets-section-title-container">
+        <h4 class="tickets-section-title section-title">Купили билеты</h4>
+        <div class="tickets-section-numbers">
+          <span class="tickets-section-numbers_black">932/ </span>
+          <span class="tickets-section-numbers_grey">1000</span>
+        </div>
+      </div>
+
       <div class="tickets-section-cards-container">
         <ClockLoader v-if="isLoading" />
         <template v-if="data.length && allUsersAreShown && !isLoading">
@@ -264,6 +271,10 @@ export default {
   width: 40px;
   border: 1px solid #ffffff;
   background: transparent;
+
+  &:hover {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+  }
 }
 
 .next-prev-button_active {
@@ -335,17 +346,17 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
   justify-content: space-between;
 
   position: relative;
+
+  width: 996px;
 
   a:nth-last-child(2) {
     margin-bottom: 60px;
   }
 
   @media screen and (max-width: 1116px) {
-    // justify-content: center;
     max-width: 650px;
     margin: 0 auto;
   }
@@ -497,6 +508,15 @@ export default {
   color: #ffffff;
 
   align-self: flex-end;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0);
+    color: $almostBlack;
+    box-shadow: inset 0 0 0 3px $almostBlack;
+
+    font-weight: 700;
+    font-family: "OpenSans-Bold", sans-serif;
+  }
 }
 
 .about-group-section {
@@ -591,5 +611,39 @@ export default {
 
 .tickets-section-link_up {
   margin: -30px 0 30px;
+}
+
+.tickets-section-title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media screen and (max-width: 1116px) {
+    justify-content: center;
+  }
+}
+
+.tickets-section-numbers {
+  padding-top: 40px;
+  margin-bottom: 16px;
+
+  @media screen and (max-width: 1116px) {
+    padding-top: 0px;
+  }
+}
+
+.tickets-section-numbers_black,
+.tickets-section-numbers_grey {
+  font-family: "AlegreyaSansSC-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 35px;
+  line-height: 40px;
+
+  color: #000;
+}
+
+.tickets-section-numbers_grey {
+  color: rgba(0, 0, 0, 0.31);
 }
 </style>

@@ -41,6 +41,10 @@ export default {
   transition: all 0.3s ease;
 
   outline: none;
+
+  &:hover {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+  }
 }
 // .button span {
 //   position: relative;

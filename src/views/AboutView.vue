@@ -177,6 +177,15 @@ export default {
 
   margin: 0;
   padding: 11px 18px 13px;
+
+  @media screen and (max-width: 1116px) {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 11px 0px 13px;
+  }
+  @media screen and (max-width: 900px) {
+    text-align: center;
+  }
 }
 
 .user-data {
@@ -187,7 +196,33 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
 
-  div:not(.user-section-buttons-container) {
+  @media screen and (max-width: 1116px) {
+    max-width: 800px;
+    // padding: 0 20px;
+    border-right: 1px solid #000;
+
+    div:nth-last-child(-n + 2) {
+      width: 50%;
+      border-top: 1px solid #000;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    max-width: 500px;
+
+    border-right: 1px solid #000;
+
+    div:nth-last-child(-n + 2) {
+      width: 100%;
+      border-top: 1px solid #000;
+    }
+
+    div:nth-child(-n + 2) {
+      border-bottom: 1px solid #000;
+    }
+  }
+
+  div {
     border-left: 1px solid #000;
     font-family: "OpenSans-Regular", sans-serif;
     font-style: normal;
@@ -200,9 +235,18 @@ export default {
 
     display: flex;
     align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 600px) {
+      width: 100%;
+    }
   }
   div:last-child {
     border-right: 1px solid #000;
+
+    @media screen and (max-width: 1116px) {
+      border-right: none;
+    }
   }
 
   .user-bs {
@@ -232,6 +276,15 @@ export default {
 
   margin: 0 auto;
   align-self: center;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0);
+    color: $almostBlack;
+    box-shadow: inset 0 0 0 3px $almostBlack;
+
+    font-weight: 700;
+    font-family: "OpenSans-Bold", sans-serif;
+  }
 }
 
 .user-section-button-container {

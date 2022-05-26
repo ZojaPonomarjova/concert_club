@@ -61,7 +61,7 @@ export default {
 }
 
 .profile-card-button {
-  font-family: "OpenSans-SemiBold";
+  font-family: "OpenSans-SemiBold", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 11px;
@@ -74,6 +74,15 @@ export default {
 
   padding: 10px 20px;
   min-width: 148px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0);
+    color: $almostBlack;
+    box-shadow: inset 0 0 0 3px $almostBlack;
+
+    font-weight: 700;
+    font-family: "OpenSans-Bold", sans-serif;
+  }
 }
 
 .profile-card-name,

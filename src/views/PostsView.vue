@@ -14,6 +14,9 @@
           v-on:handleClickOnPostCard="handleClickOnPostCard($event)"
         />
       </div>
+      <div class="user-section-error" v-if="errorTextForPosts">
+        {{ errorTextForPosts }}
+      </div>
     </div>
   </main>
 </template>
@@ -38,15 +41,10 @@ export default {
   // },
 
   computed: {
-    //   // //ошибка при загрузке
-    //   // errorText() {
-    //   //   return this.$store.getters.errorTextForPerson;
-    //   // },
-    //   // //данные пользователя
-    //   data() {
-    //     return this.$store.getters.data;
-    //   },
-    //
+    //ошибка при загрузке
+    errorTextForPosts() {
+      return this.$store.getters.errorTextForPosts;
+    },
     isLoading() {
       return this.$store.getters.isLoading;
     },
@@ -113,5 +111,20 @@ export default {
   margin-bottom: 15px;
 
   margin-right: 12px;
+}
+
+.user-section-error {
+  color: brown;
+  font-family: "AlegreyaSansSC-Medium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 40px;
+
+  margin: 0px 0px;
+
+  min-height: 159px;
+
+  text-align: center;
 }
 </style>

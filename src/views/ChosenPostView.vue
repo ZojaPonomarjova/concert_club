@@ -41,6 +41,13 @@
             {{ successText }}
           </div>
           <div v-if="successText === ''" class="add-comment-container">
+            <div class="cl-btn-2" v-on:click="closeAddCommentMode">
+              <div>
+                <div class="leftright"></div>
+                <div class="rightleft"></div>
+                <span class="close-btn">закрыть</span>
+              </div>
+            </div>
             <label for="addCommentEmail" class="add-comment-label"
               >Напишите e-mail</label
             >
@@ -163,7 +170,7 @@ export default {
 @import "../assets/styles/vars.scss";
 
 .chosen-post-section {
-  width: 1116px;
+  max-width: 1116px;
   margin: 0 auto;
 
   min-height: calc(100vh - 70px);
@@ -171,6 +178,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1146px) {
+    margin: 0 20px;
+  }
 }
 
 .chosen-post-section-container {
@@ -216,6 +227,18 @@ export default {
   &:disabled {
     background-color: rgba(0, 0, 0, 0.61);
   }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0);
+    color: $almostBlack;
+    box-shadow: inset 0 0 0 3px $almostBlack;
+  }
+
+  @media screen and (max-width: 400px) {
+    height: fit-content;
+
+    padding: 11.5px 35px;
+  }
 }
 
 .chosen-post-section-add-comment {
@@ -235,11 +258,21 @@ export default {
   max-width: fit-content;
   padding: 30px 20px;
 
+  position: relative;
+
   border: 1px solid rgba(0, 0, 0, 0.51);
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 992px) {
+    margin: 150px auto 50px;
+  }
+
+  @media screen and (max-width: 320px) {
+    min-width: 280px;
+  }
 }
 
 .add-comment-input {
@@ -248,6 +281,10 @@ export default {
   margin-bottom: 20px;
   height: 40px;
   width: 30vw;
+
+  @media screen and (max-width: 992px) {
+    width: 100%;
+  }
 
   &::placeholder {
     font-family: "OpenSans-SemiBold", sans-serif;
@@ -269,6 +306,10 @@ export default {
   margin-bottom: 30px;
   height: 100px;
   width: 30vw;
+
+  @media screen and (max-width: 992px) {
+    width: 100%;
+  }
 
   &::placeholder {
     font-family: "OpenSans-SemiBold", sans-serif;
@@ -298,6 +339,10 @@ export default {
   text-align: start;
 
   width: 100%;
+
+  &:first-of-type {
+    margin-top: 50px;
+  }
 }
 
 .email-error {
@@ -347,7 +392,63 @@ export default {
   line-height: 40px;
 
   margin: 0px 0px;
+}
 
-  //   min-height: 159px;
+.cl-btn-2 {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.cl-btn-2 div {
+  cursor: pointer;
+  position: relative;
+  height: 68px;
+  width: 50px;
+}
+.cl-btn-2 .leftright {
+  height: 4px;
+  width: 50px;
+  position: absolute;
+  margin-top: 24px;
+  background-color: #969696;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  transition: all 0.3s ease-in;
+}
+.cl-btn-2 .rightleft {
+  height: 4px;
+  width: 50px;
+  position: absolute;
+  margin-top: 24px;
+  background-color: #969696;
+  border-radius: 2px;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease-in;
+}
+.cl-btn-2 .close-btn {
+  margin: 54px 0 0 -5px;
+  position: absolute;
+  color: #969696;
+  font-family: Tahoma, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in;
+  opacity: 0;
+}
+.cl-btn-2 div:hover .leftright {
+  transform: rotate(-45deg);
+  background-color: #969696;
+}
+.cl-btn-2 div:hover .rightleft {
+  transform: rotate(45deg);
+  background-color: #969696;
+}
+.cl-btn-2 div:hover .close-btn {
+  opacity: 1;
 }
 </style>
