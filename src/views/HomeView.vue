@@ -274,7 +274,9 @@ export default {
   background: transparent;
 
   &:hover {
-    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+    @media screen and (min-width: 579px) {
+      box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+    }
   }
 }
 
@@ -352,6 +354,7 @@ export default {
   position: relative;
 
   width: 996px;
+  transition: all 0.3s ease;
 
   a:nth-last-child(2) {
     margin-bottom: 60px;
@@ -511,12 +514,14 @@ export default {
   align-self: flex-end;
 
   &:hover {
-    background: rgba(0, 0, 0, 0);
-    color: $almostBlack;
-    box-shadow: inset 0 0 0 3px $almostBlack;
+    @media screen and (min-width: 579px) {
+      background: rgba(0, 0, 0, 0);
+      color: $almostBlack;
+      box-shadow: inset 0 0 0 3px $almostBlack;
 
-    font-weight: 700;
-    font-family: "OpenSans-Bold", sans-serif;
+      font-weight: 700;
+      font-family: "OpenSans-Bold", sans-serif;
+    }
   }
 }
 

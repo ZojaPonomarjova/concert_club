@@ -241,9 +241,11 @@ export default {
   }
 
   &:hover {
-    background: rgba(0, 0, 0, 0);
-    color: $almostBlack;
-    box-shadow: inset 0 0 0 3px $almostBlack;
+    @media screen and (min-width: 579px) {
+      background: rgba(0, 0, 0, 0);
+      color: $almostBlack;
+      box-shadow: inset 0 0 0 3px $almostBlack;
+    }
   }
 
   @media screen and (max-width: 400px) {
@@ -391,6 +393,7 @@ export default {
   line-height: 40px;
 
   margin: 0px 0px;
+  text-align: center;
 }
 
 .chosen-post-section-error {
@@ -451,14 +454,20 @@ export default {
   opacity: 0;
 }
 .cl-btn-2 div:hover .leftright {
-  transform: rotate(-45deg);
-  background-color: #969696;
+  @media screen and (min-width: 579px) {
+    transform: rotate(-45deg);
+    background-color: #969696;
+  }
 }
 .cl-btn-2 div:hover .rightleft {
-  transform: rotate(45deg);
-  background-color: #969696;
+  @media screen and (min-width: 579px) {
+    transform: rotate(45deg);
+    background-color: #969696;
+  }
 }
 .cl-btn-2 div:hover .close-btn {
-  opacity: 1;
+  @media screen and (min-width: 579px) {
+    opacity: 1;
+  }
 }
 </style>

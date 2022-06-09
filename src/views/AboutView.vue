@@ -286,12 +286,14 @@ export default {
   align-self: center;
 
   &:hover {
-    background: rgba(0, 0, 0, 0);
-    color: $almostBlack;
-    box-shadow: inset 0 0 0 3px $almostBlack;
+    @media screen and (min-width: 579px) {
+      background: rgba(0, 0, 0, 0);
+      color: $almostBlack;
+      box-shadow: inset 0 0 0 3px $almostBlack;
 
-    font-weight: 700;
-    font-family: "OpenSans-Bold", sans-serif;
+      font-weight: 700;
+      font-family: "OpenSans-Bold", sans-serif;
+    }
   }
 }
 

@@ -1,7 +1,9 @@
 /*компонент для отображения хэдера */
 <template>
   <header class="header">
-    <p class="header-logo">CONCERT CLUB</p>
+    <router-link to="/">
+      <p class="header-logo">CONCERT CLUB</p>
+    </router-link>
     <input id="menu-toggle" type="checkbox" />
     <label class="menu-button-container" for="menu-toggle">
       <div class="menu-button"></div>

@@ -44,6 +44,7 @@ export default {
   padding: 14px 14px;
   width: 240px;
   margin-bottom: 10px;
+  transition: all 0.3s ease;
 
   @media screen and (max-width: 616px) {
     width: 100%;

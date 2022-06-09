@@ -43,7 +43,12 @@ export default {
   outline: none;
 
   &:hover {
-    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+    @media screen and (min-width: 579px) {
+      box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+    }
+  }
+  &:active {
+    opacity: 0.9;
   }
 }
 </style>
