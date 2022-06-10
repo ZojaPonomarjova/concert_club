@@ -2,7 +2,7 @@
   "name": "concert_club",
   "version": "0.1.0",
   "private": true,
-  "wst": "/dist/",
+  "wst": "/docs/",
   "homepage": "https://github.com/ZojaPonomarjova/concert_club/",
   "scripts": {
     "serve": "vue-cli-service serve",
